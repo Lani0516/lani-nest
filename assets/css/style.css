@@ -274,8 +274,11 @@ img {
 }
 
 .home__button:hover {
-    color: #fff;
-    background-color: var(--secondary-color);
+    background-color: var(--title-color);
+}
+
+.home__button:hover span {
+    color: var(--primary-color);
 }
 
 .home__button .arrow__down {
@@ -286,6 +289,7 @@ img {
 }
 
 .home__button:hover .arrow__down {
+    color: var(--title-color);
     transform: translateY(15px);
     transition: transform .4s;
 }
