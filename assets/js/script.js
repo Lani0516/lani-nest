@@ -45,8 +45,13 @@ window.addEventListener('scroll', () => {
         if (navs[i] === currentPage) {
             return
         }
-        currentPage = navs[i]
-        currentPage.classList.add("button-active")
+        // Return when pages not exist
+        try {
+            currentPage = navs[i]
+            currentPage.classList.add("button-active")
+        } catch (e) {
+            return
+        }
         
         navs.splice(i, 1)
 
@@ -61,8 +66,48 @@ window.addEventListener('scroll', () => {
     }
 })
 
+// Scroll Header
+const scrollHeader = () => {
+    const header = document.getElementById('header')
+    this.scrollY >= (window.innerHeight - 250) ? header.classList.add('scroll-header')
+                                               : header.classList.remove('scroll-header')
+}
+window.addEventListener('scroll', scrollHeader)
 
+// Theme Changer
+const themeButton = document.getElementById('theme-button'),
+      darkTheme = 'dark-theme',
+      imgTheme = 'assets/img/girl/girl-main-dark.png'
 
+const selectedTheme = localStorage.getItem('selected-theme'),
+      selectedImg = localStorage.getItem('selected-img')
 
+const getCurrentTheme = () => document.body.classList.contains(darkTheme) ? 'dark' : 'light',
+      getCurrentImg = () => themeButton.src === darkTheme ? imgTheme : 'assets/img/girl/girl-main-light.png'
+
+if (selectedTheme) {
+    document.body.classList[selectedTheme === 'dark' ? 'add' : 'remove'](darkTheme)
+    if (selectedImg.src === imgTheme) {
+        imgTheme.src = imgTheme
+    } else {
+        imgTheme.src = 'assets/img/girl/girl-main-light.png'
+    }
+}
+
+let n = 1
+
+themeButton.addEventListener('click', () => {
+    document.body.classList.toggle(darkTheme)
+    // Budget toggle
+    if (n % 2 == 0 ) {
+        themeButton.src = imgTheme
+    } else {
+        themeButton.src = 'assets/img/girl/girl-main-light.png'
+    }
+    n++
+    // Save theme
+    localStorage.setItem('selected-theme', getCurrentTheme())
+    localStorage.setItem('selected-img', getCurrentImg())
+})
 
 
